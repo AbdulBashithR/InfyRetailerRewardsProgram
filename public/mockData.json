@@ -1,0 +1,148 @@
+[
+  {
+    "transactionId": "T001",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2025-12-05",
+    "productPurchased": "Headphones",
+    "price": 120.0
+  },
+  {
+    "transactionId": "T002",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2025-12-18",
+    "productPurchased": "Book",
+    "price": 30.0
+  },
+  {
+    "transactionId": "T003",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2026-01-10",
+    "productPurchased": "Jacket",
+    "price": 75.0
+  },
+  {
+    "transactionId": "T003",
+    "customerId": "C0011",
+    "customerName": "Abdul Rahman",
+    "purchaseDate": "2026-01-10",
+    "productPurchased": "Jacket",
+    "price": 75.0
+  },
+  {
+    "transactionId": "T004",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2026-01-25",
+    "productPurchased": "Sneakers",
+    "price": 150.0
+  },
+  {
+    "transactionId": "T005",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2026-02-08",
+    "productPurchased": "Watch",
+    "price": 200.0
+  },
+  {
+    "transactionId": "T006",
+    "customerId": "C001",
+    "customerName": "Alice Johnson",
+    "purchaseDate": "2026-02-20",
+    "productPurchased": "Sunglasses",
+    "price": 55.0
+  },
+
+  {
+    "transactionId": "T007",
+    "customerId": "C002",
+    "customerName": "Bob Smith",
+    "purchaseDate": "2025-12-02",
+    "productPurchased": "Keyboard",
+    "price": 110.0
+  },
+  {
+    "transactionId": "T008",
+    "customerId": "C002",
+    "customerName": "Bob Smith",
+    "purchaseDate": "2025-12-22",
+    "productPurchased": "Mouse",
+    "price": 45.0
+  },
+  {
+    "transactionId": "T009",
+    "customerId": "C002",
+    "customerName": "Bob Smith",
+    "purchaseDate": "2026-01-15",
+    "productPurchased": "Monitor",
+    "price": 300.0
+  },
+  {
+    "transactionId": "T010",
+    "customerId": "C002",
+    "customerName": "Bob Smith",
+    "purchaseDate": "2026-02-05",
+    "productPurchased": "USB Hub",
+    "price": 35.0
+  },
+  {
+    "transactionId": "T011",
+    "customerId": "C002",
+    "customerName": "Bob Smith",
+    "purchaseDate": "2026-02-18",
+    "productPurchased": "Webcam",
+    "price": 85.0
+  },
+
+  {
+    "transactionId": "T012",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2025-12-10",
+    "productPurchased": "Yoga Mat",
+    "price": 40.0
+  },
+  {
+    "transactionId": "T013",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2025-12-28",
+    "productPurchased": "Running Shoes",
+    "price": 130.0
+  },
+  {
+    "transactionId": "T014",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2026-01-08",
+    "productPurchased": "Water Bottle",
+    "price": 25.0
+  },
+  {
+    "transactionId": "T015",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2026-01-20",
+    "productPurchased": "Backpack",
+    "price": 90.0
+  },
+  {
+    "transactionId": "T016",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2026-02-12",
+    "productPurchased": "Fitness Tracker",
+    "price": 180.0
+  },
+  {
+    "transactionId": "T017",
+    "customerId": "C003",
+    "customerName": "Carol Davis",
+    "purchaseDate": "2026-02-25",
+    "productPurchased": "Towel Set",
+    "price": 50.0
+  }
+]
