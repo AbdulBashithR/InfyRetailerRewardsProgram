@@ -7,6 +7,7 @@ import { Index } from "./pages/Index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TabsView from "./pages/TabsView";
 import Layout from "./components/Layout";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 
 /**
  * App component - Main application entry point with routing setup.
@@ -22,14 +23,16 @@ import Layout from "./components/Layout";
  */
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Index />} />
-          <Route path="/tabs" element={<TabsView />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary fallback={<h2>Something went wrong.</h2>}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/tabs" element={<TabsView />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

@@ -19,7 +19,7 @@ jest.mock("../../components/common/GridTable", () => ({
 
 // Mock reward utils (business logic isolation)
 jest.mock("../../utils/rewardUtils", () => ({
-  ComputeRewardsPointsForTransactions: jest.fn(),
+  computeRewardsPointsForTransactions: jest.fn(),
   getMonthlyRewards: jest.fn(),
   getTotalRewards: jest.fn(),
   sortByDate: jest.fn(),
@@ -27,7 +27,7 @@ jest.mock("../../utils/rewardUtils", () => ({
 
 import { useFetch } from "../../hooks/useFetch";
 import {
-  ComputeRewardsPointsForTransactions,
+  computeRewardsPointsForTransactions,
   getMonthlyRewards,
   getTotalRewards,
   sortByDate,
@@ -85,7 +85,7 @@ describe("TabsView Component", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
     getMonthlyRewards.mockReturnValue(monthlyMock);
     getTotalRewards.mockReturnValue(totalMock);
     sortByDate.mockReturnValue(computedTransactions);
@@ -102,7 +102,7 @@ describe("TabsView Component", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
     getMonthlyRewards.mockReturnValue(monthlyMock);
     getTotalRewards.mockReturnValue(totalMock);
     sortByDate.mockReturnValue(computedTransactions);
@@ -121,7 +121,7 @@ describe("TabsView Component", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
     getMonthlyRewards.mockReturnValue(monthlyMock);
     getTotalRewards.mockReturnValue(totalMock);
     sortByDate.mockReturnValue(computedTransactions);
@@ -140,14 +140,14 @@ describe("TabsView Component", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(computedTransactions);
     getMonthlyRewards.mockReturnValue(monthlyMock);
     getTotalRewards.mockReturnValue(totalMock);
     sortByDate.mockReturnValue(computedTransactions);
 
     render(<TabsView />);
 
-    expect(ComputeRewardsPointsForTransactions).toHaveBeenCalledWith(
+    expect(computeRewardsPointsForTransactions).toHaveBeenCalledWith(
       mockApiData,
     );
   });

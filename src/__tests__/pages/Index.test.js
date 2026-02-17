@@ -19,7 +19,7 @@ jest.mock("../../components/ui/RewardsTable", () => ({
 
 // Mock reward utils to control computation output
 jest.mock("../../utils/rewardUtils", () => ({
-  ComputeRewardsPointsForTransactions: jest.fn(),
+  computeRewardsPointsForTransactions: jest.fn(),
   getMonthlyRewards: jest.fn(),
   getTotalRewards: jest.fn(),
   sortByDate: jest.fn(),
@@ -27,7 +27,7 @@ jest.mock("../../utils/rewardUtils", () => ({
 
 import { useFetch } from "../../hooks/useFetch";
 import {
-  ComputeRewardsPointsForTransactions,
+  computeRewardsPointsForTransactions,
   getMonthlyRewards,
   getTotalRewards,
   sortByDate,
@@ -81,7 +81,7 @@ describe("Index Page", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
     getMonthlyRewards.mockReturnValue(mockMonthly);
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);
@@ -100,14 +100,14 @@ describe("Index Page", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
     getMonthlyRewards.mockReturnValue(mockMonthly);
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);
 
     render(<Index />);
 
-    expect(ComputeRewardsPointsForTransactions).toHaveBeenCalledWith(
+    expect(computeRewardsPointsForTransactions).toHaveBeenCalledWith(
       mockTransactions,
     );
     expect(getMonthlyRewards).toHaveBeenCalledWith(mockTransactions);
@@ -122,7 +122,7 @@ describe("Index Page", () => {
       error: null,
     });
 
-    ComputeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
+    computeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
     getMonthlyRewards.mockReturnValue(mockMonthly);
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);

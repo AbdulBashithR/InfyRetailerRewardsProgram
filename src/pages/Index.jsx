@@ -11,7 +11,7 @@ import { useFetch } from "../hooks/useFetch";
 
 //UTILS IMPORTS
 import {
-  ComputeRewardsPointsForTransactions,
+  computeRewardsPointsForTransactions,
   getMonthlyRewards,
   getTotalRewards,
   sortByDate,
@@ -26,6 +26,7 @@ import {
 
 //COMPONENTS IMPORTS
 import RewardsTable from "../components/ui/RewardsTable";
+import ErrorBoundary from "../components/common/ErrorBoundary";
 
 /**
  * Index (Dashboard) component - Main dashboard view with rewards overview.
@@ -67,7 +68,7 @@ export const Index = () => {
    * Recalculates only when data changes
    */
   const transactions = useMemo(
-    () => ComputeRewardsPointsForTransactions(data ?? []),
+    () => computeRewardsPointsForTransactions(data ?? []),
     [data],
   );
   const monthlyRewards = useMemo(
@@ -108,55 +109,54 @@ export const Index = () => {
   }
 
   return (
-    <Grid
-      container
-      sx={{
-        height: "100vh",
-      }}
+    <ErrorBoundary
+      fallback={<Alert severity="error">Failed to Dashboard Component</Alert>}
     >
-      {/* Top row: Monthly Rewards (left) and Total Rewards (right) */}
       <Grid
         container
-        spacing={2}
-        sx={{ height: "50vh", minHeight: 0 }}
-        size={12}
+        sx={{
+          height: "100vh",
+        }}
       >
-        {/* Left column: Monthly Rewards Table */}
-        <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
-          <Box sx={boxStyles}>
-            <RewardsTable
-              data={monthlyRewards}
-              title="Monthly Rewards"
-              columns={monthlyRewardsColumns}
-              errorFallBack="Failed to load User monthly rewards"
-            />
-          </Box>
+        {/* Top row: Monthly Rewards (left) and Total Rewards (right) */}
+        <Grid container sx={{ height: "50vh", minHeight: 0 }} size={12}>
+          {/* Left column: Monthly Rewards Table */}
+          <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
+            <Box sx={boxStyles}>
+              <RewardsTable
+                data={monthlyRewards}
+                title="Monthly Rewards"
+                columns={monthlyRewardsColumns}
+                errorFallBack="Failed to load User monthly rewards"
+              />
+            </Box>
+          </Grid>
+
+          {/* Right column: Total Rewards Table */}
+          <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
+            <Box sx={boxStyles}>
+              <RewardsTable
+                data={totalRewards}
+                title="Total Rewards"
+                columns={totalRewardsColumns}
+                errorFallBack="Failed to load User total rewards"
+              />
+            </Box>
+          </Grid>
         </Grid>
 
-        {/* Right column: Total Rewards Table */}
-        <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
+        {/* Bottom row: Transactions Table (full width) */}
+        <Grid item sx={{ height: "50vh", minHeight: 0 }} size={12}>
           <Box sx={boxStyles}>
             <RewardsTable
-              data={totalRewards}
-              title="Total Rewards"
-              columns={totalRewardsColumns}
-              errorFallBack="Failed to load User total rewards"
+              data={sortedTransactions}
+              title="Transactions"
+              columns={transactionsColumns}
+              errorFallBack="Failed to load transactions"
             />
           </Box>
         </Grid>
       </Grid>
-
-      {/* Bottom row: Transactions Table (full width) */}
-      <Grid item sx={{ height: "50vh", minHeight: 0 }} size={12}>
-        <Box sx={boxStyles}>
-          <RewardsTable
-            data={sortedTransactions}
-            title="Transactions"
-            columns={transactionsColumns}
-            errorFallBack="Failed to load transactions"
-          />
-        </Box>
-      </Grid>
-    </Grid>
+    </ErrorBoundary>
   );
 };

@@ -34,7 +34,7 @@ export const calculateRewardPoints = (price) => {
  * @returns {Array<Object>} Transactions with computed rewardPoints field
 
  */
-export const ComputeRewardsPointsForTransactions = (transactions) =>
+export const computeRewardsPointsForTransactions = (transactions) =>
   transactions.map((t) => ({
     ...t,
     rewardPoints: calculateRewardPoints(t?.price ?? 0),
@@ -55,16 +55,15 @@ export const getMonthlyRewards = (transactions) => {
    * Key format: "customerId-year-month"
    * @type {Object<string, Object>}
    */
-  const map = {};
-  transactions.forEach(
-    ({ customerId, customerName, purchaseDate, rewardPoints }) => {
-      const d = new Date(purchaseDate);
-      console.log(d);
-      const month = d.getMonth() + 1;
-      const year = d.getFullYear();
+  const map = transactions.reduce(
+    (acc, { customerId, customerName, purchaseDate, rewardPoints }) => {
+      const date = new Date(purchaseDate);
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
       const key = `${customerId}-${year}-${month}`;
-      if (!map[key]) {
-        map[key] = {
+
+      if (!acc[key]) {
+        acc[key] = {
           customerId,
           customerName,
           month,
@@ -72,13 +71,13 @@ export const getMonthlyRewards = (transactions) => {
           monthlyRewardPoints: 0,
         };
       }
-      map[key].monthlyRewardPoints += rewardPoints;
+
+      acc[key].monthlyRewardPoints += rewardPoints || 0;
+      return acc;
     },
+    {},
   );
-  /**
-   * Sort results by year then month in ascending order
-   * @type {Array<Object>}
-   */
+
   return Object.values(map).sort(
     (a, b) => a.year - b.year || a.month - b.month,
   );
@@ -97,13 +96,21 @@ export const getTotalRewards = (transactions) => {
    * Key: customerId
    * @type {Object<string, Object>}
    */
-  const map = {};
-  transactions.forEach(({ customerId, customerName, rewardPoints }) => {
-    if (!map[customerId]) {
-      map[customerId] = { customerId, customerName, totalRewardPoints: 0 };
-    }
-    map[customerId].totalRewardPoints += rewardPoints;
-  });
+  const map = transactions.reduce(
+    (acc, { customerId, customerName, rewardPoints }) => {
+      if (!acc[customerId]) {
+        acc[customerId] = {
+          customerId,
+          customerName,
+          totalRewardPoints: 0,
+        };
+      }
+
+      acc[customerId].totalRewardPoints += rewardPoints || 0;
+      return acc;
+    },
+    {},
+  );
 
   return Object.values(map);
 };

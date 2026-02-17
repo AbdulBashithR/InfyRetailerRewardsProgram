@@ -1,6 +1,6 @@
 import {
   calculateRewardPoints,
-  ComputeRewardsPointsForTransactions,
+  computeRewardsPointsForTransactions,
   getMonthlyRewards,
   getTotalRewards,
   sortByDate,
@@ -30,7 +30,7 @@ describe("calculateRewardPoints", () => {
   });
 });
 
-describe("ComputeRewardsPointsForTransactions", () => {
+describe("computeRewardsPointsForTransactions", () => {
   const mockTransactions = [
     {
       transactionId: 1,
@@ -55,7 +55,7 @@ describe("ComputeRewardsPointsForTransactions", () => {
   ];
 
   test("adds rewardPoints to each transaction", () => {
-    const result = ComputeRewardsPointsForTransactions(mockTransactions);
+    const result = computeRewardsPointsForTransactions(mockTransactions);
 
     expect(result).toHaveLength(3);
     expect(result[0].rewardPoints).toBe(90);
@@ -63,7 +63,7 @@ describe("ComputeRewardsPointsForTransactions", () => {
   });
 
   test("handles missing price using optional chaining and default 0", () => {
-    const result = ComputeRewardsPointsForTransactions(mockTransactions);
+    const result = computeRewardsPointsForTransactions(mockTransactions);
     expect(result[2].rewardPoints).toBe(0);
   });
 });

@@ -1,5 +1,5 @@
 //Package imports
-import { memo } from "react";
+import { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table,
@@ -10,7 +10,9 @@ import {
   TableContainer,
   Paper,
   Typography,
+  TableSortLabel,
 } from "@mui/material";
+import { sortData } from "../../utils/sortUtils";
 
 /**
  * @fileoverview Dynamic table component that renders tables based on provided data and column configuration.
@@ -35,7 +37,22 @@ import {
  * - Empty state display when no data is provided
  *
  */
-const DynamicTable = ({ data, columns, title }) => {
+const DynamicTable = ({ data = [], columns, title = "Table" }) => {
+  const [orderBy, setOrderBy] = useState(null);
+  const [order, setOrder] = useState("asc");
+
+  const handleSort = (columnKey) => {
+    if (!columnKey) return;
+
+    const isAsc = orderBy === columnKey && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(columnKey);
+  };
+
+  const sortedData = useMemo(
+    () => sortData(data, orderBy, order),
+    [data, orderBy, order],
+  );
   return (
     <Paper
       elevation={3}
@@ -58,7 +75,13 @@ const DynamicTable = ({ data, columns, title }) => {
             <TableRow>
               {columns.map(({ field, headerName, align = "left" }) => (
                 <TableCell key={field} align={align}>
-                  {headerName}
+                  <TableSortLabel
+                    active={orderBy === field}
+                    direction={orderBy === field ? order : "asc"}
+                    onClick={() => handleSort(field)}
+                  >
+                    {headerName}
+                  </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
@@ -72,7 +95,7 @@ const DynamicTable = ({ data, columns, title }) => {
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((row, rowIndex) => (
+              sortedData.map((row, rowIndex) => (
                 <TableRow key={row.id ?? rowIndex}>
                   {columns.map(({ field, align = "left", render }) => (
                     <TableCell key={field} align={align}>

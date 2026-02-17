@@ -100,6 +100,7 @@ export const transactionsColumns = [
     headerName: "Product Purchased",
   },
   {
+    field: "price",
     headerName: "Price",
     align: "right",
     render: (value) => value?.toFixed(2),
