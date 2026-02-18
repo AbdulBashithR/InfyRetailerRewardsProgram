@@ -28,17 +28,16 @@ Retailer Rewards Program is a React-based web application designed to track cust
 App
 │
 ├── ErrorBoundary
-│   └── BrowserRouter
-│       └── Layout
-│           ├── SideBar (Navigation)
-│           └── Outlet (Routed Content)
-│               ├── DashboardView ("/")
-│               │   └── DynamicTable
-│               │
-│               └── TabsView ("/tabs")
-│                   └── GridTable
+│ └── BrowserRouter
+│ └── Layout
+│ ├── SideBar (Navigation)
+│ └── Outlet (Routed Content)
+│ ├── DashboardView ("/")
+│ │ └── DynamicTable
+│ │
+│ └── TabsView ("/tabs")
+│ └── GridTable
 `
-
 
 ## Installation
 
