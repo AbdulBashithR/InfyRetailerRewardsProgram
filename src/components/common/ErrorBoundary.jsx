@@ -35,7 +35,7 @@ class ErrorBoundary extends React.Component {
    * @param {Error} error - The error that was thrown
    * @returns {Object} Updated state object
    */
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
@@ -58,7 +58,7 @@ class ErrorBoundary extends React.Component {
       if (React.isValidElement(fallback)) {
         return fallback;
       }
-      return <h2>Something went wrong.</h2>;
+      return <h2>Something went wrongs.</h2>;
     }
     return this.props.children;
   }

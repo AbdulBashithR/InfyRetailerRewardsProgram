@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import RewardsTable from "../../../components/ui/RewardsTable";
 
 jest.mock("../../../components/common/DynamicTable", () => ({

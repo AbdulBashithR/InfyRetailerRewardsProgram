@@ -4,7 +4,19 @@
 
 //PACKAGE IMPORTS
 import { useMemo } from "react";
+
 import { Alert, CircularProgress, Container, Grid, Box } from "@mui/material";
+
+//COMPONENTS IMPORTS
+import ErrorBoundary from "../components/common/ErrorBoundary";
+import RewardsTable from "../components/ui/RewardsTable";
+
+//CONSTANTS IMPORTS
+import {
+  monthlyRewardsColumns,
+  totalRewardsColumns,
+  transactionsColumns,
+} from "../constants/tableColumns";
 
 //HOOKS IMPORTS
 import { useFetch } from "../hooks/useFetch";
@@ -16,17 +28,6 @@ import {
   getTotalRewards,
   sortByDate,
 } from "../utils/rewardUtils";
-
-//CONSTANTS IMPORTS
-import {
-  monthlyRewardsColumns,
-  totalRewardsColumns,
-  transactionsColumns,
-} from "../constants/tableColumns";
-
-//COMPONENTS IMPORTS
-import RewardsTable from "../components/ui/RewardsTable";
-import ErrorBoundary from "../components/common/ErrorBoundary";
 
 /**
  * Index (Dashboard) component - Main dashboard view with rewards overview.
@@ -44,7 +45,7 @@ import ErrorBoundary from "../components/common/ErrorBoundary";
  * for performance optimization. Includes loading and error states.
  
  */
-export const Index = () => {
+export const DashboardView = () => {
   /**
    * Fetch transaction data from mock data endpoint
    * @type {Object}
@@ -103,7 +104,9 @@ export const Index = () => {
   if (error) {
     return (
       <Container sx={{ mt: 4 }}>
-        <Alert severity="error">{error}</Alert>
+        <Alert severity="error">
+          {error?.message ?? "An error occurred while loading dashboard data."}
+        </Alert>
       </Container>
     );
   }

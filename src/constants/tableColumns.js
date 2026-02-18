@@ -7,7 +7,7 @@
  * Array of month names for converting numeric months to display names
  * @type {Array<string>}
  */
-const MONTH_NAMES = [
+export const MONTH_NAMES = [
   "January",
   "February",
   "March",
@@ -39,9 +39,8 @@ export const monthlyRewardsColumns = [
   { field: "customerId", headerName: "Customer ID" },
   { field: "customerName", headerName: "Customer Name" },
   {
-    field: "month",
+    field: "monthName",
     headerName: "Month",
-    render: (month) => MONTH_NAMES[month - 1] ?? month,
   },
   { field: "year", headerName: "Year" },
   {

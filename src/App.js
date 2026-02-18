@@ -3,11 +3,14 @@
  * Contains routes for the dashboard and tabbed views.
  */
 
-import { Index } from "./pages/Index";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import TabsView from "./pages/TabsView";
-import Layout from "./components/Layout";
+
 import ErrorBoundary from "./components/common/ErrorBoundary";
+import Layout from "./components/Layout";
+import { DashboardView } from "./pages/DashboardView";
+import TabsView from "./pages/TabsView";
+import NotFound from "./pages/NotFound";
+import { Alert } from "@mui/material";
 
 /**
  * App component - Main application entry point with routing setup.
@@ -23,12 +26,15 @@ import ErrorBoundary from "./components/common/ErrorBoundary";
  */
 function App() {
   return (
-    <ErrorBoundary fallback={<h2>Something went wrong.</h2>}>
+    <ErrorBoundary
+      fallback={<Alert severity="error">Something went wrong.</Alert>}
+    >
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<DashboardView />} />
             <Route path="/tabs" element={<TabsView />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

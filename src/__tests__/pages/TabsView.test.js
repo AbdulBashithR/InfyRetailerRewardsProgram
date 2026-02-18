@@ -1,5 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+
+import { useFetch } from "../../hooks/useFetch";
 import TabsView from "../../pages/TabsView";
+import {
+  computeRewardsPointsForTransactions,
+  getMonthlyRewards,
+  getTotalRewards,
+  sortByDate,
+} from "../../utils/rewardUtils";
 
 // Mock useFetch hook
 jest.mock("../../hooks/useFetch", () => ({
@@ -24,14 +32,6 @@ jest.mock("../../utils/rewardUtils", () => ({
   getTotalRewards: jest.fn(),
   sortByDate: jest.fn(),
 }));
-
-import { useFetch } from "../../hooks/useFetch";
-import {
-  computeRewardsPointsForTransactions,
-  getMonthlyRewards,
-  getTotalRewards,
-  sortByDate,
-} from "../../utils/rewardUtils";
 
 describe("TabsView Component", () => {
   const mockApiData = [

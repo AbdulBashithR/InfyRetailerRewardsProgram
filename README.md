@@ -23,6 +23,23 @@ Retailer Rewards Program is a React-based web application designed to track cust
 - React Testing Library
 - Jest
 
+## Project Structure
+
+App
+│
+├── ErrorBoundary
+│   └── BrowserRouter
+│       └── Layout
+│           ├── SideBar (Navigation)
+│           └── Outlet (Routed Content)
+│               ├── DashboardView ("/")
+│               │   └── DynamicTable
+│               │
+│               └── TabsView ("/tabs")
+│                   └── GridTable
+`
+
+
 ## Installation
 
 1. Clone the repository:

@@ -3,22 +3,33 @@
  */
 
 import { useState, useMemo } from "react";
-import { Container, CircularProgress, Alert, Box } from "@mui/material";
-import { Tabs, Tab } from "@mui/material";
+import {
+  Container,
+  CircularProgress,
+  Alert,
+  Box,
+  Tabs,
+  Tab,
+} from "@mui/material";
+
+import ErrorBoundary from "../components/common/ErrorBoundary";
+import GridTable from "../components/common/GridTable";
+
+import {
+  monthlyRewardsColumns,
+  totalRewardsColumns,
+  transactionsColumns,
+} from "../constants/tableColumns";
+
 import { useFetch } from "../hooks/useFetch";
+
 import {
   computeRewardsPointsForTransactions,
   getMonthlyRewards,
   getTotalRewards,
   sortByDate,
 } from "../utils/rewardUtils";
-import {
-  monthlyRewardsColumns,
-  totalRewardsColumns,
-  transactionsColumns,
-} from "../constants/tableColumns";
-import GridTable from "../components/common/GridTable";
-import ErrorBoundary from "../components/common/ErrorBoundary";
+import GridRewardsTable from "../components/ui/GridRewardsTable";
 
 /**
  * TabsView component - Displays rewards data organized in three tabs.
@@ -87,7 +98,9 @@ const TabsView = () => {
   if (error) {
     return (
       <Container sx={{ mt: 4 }}>
-        <Alert severity="error">{error}</Alert>
+        <Alert severity="error">
+          {error?.message ?? "An error occurred while loading tabs view data."}
+        </Alert>
       </Container>
     );
   }
@@ -108,7 +121,7 @@ const TabsView = () => {
 
         {/* Tab 0: Monthly Rewards Table */}
         {tab === 0 && (
-          <GridTable
+          <GridRewardsTable
             data={monthlyRewards}
             title="Monthly Rewards"
             columns={monthlyRewardsColumns}
@@ -118,7 +131,7 @@ const TabsView = () => {
 
         {/* Tab 1: Total Rewards Table */}
         {tab === 1 && (
-          <GridTable
+          <GridRewardsTable
             data={totalRewards}
             title="Total Rewards"
             columns={totalRewardsColumns}
@@ -128,7 +141,7 @@ const TabsView = () => {
 
         {/* Tab 2: Transactions Table */}
         {tab === 2 && (
-          <GridTable
+          <GridRewardsTable
             data={sortedTransactions}
             title="Transactions"
             columns={transactionsColumns}

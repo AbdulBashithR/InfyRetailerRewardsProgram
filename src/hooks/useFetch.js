@@ -23,7 +23,7 @@ import { useState, useEffect } from "react";
  * - Prevents memory leaks by aborting pending requests
 
  */
-export const useFetch = (url = "/mockData.json", options = {}) => {
+export const useFetch = (url = "/mockData.json") => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -43,10 +43,11 @@ export const useFetch = (url = "/mockData.json", options = {}) => {
       setError(null);
 
       try {
-        const response = await fetch(url, { signal, ...options });
+        const response = await fetch(url, { signal });
         if (!response.ok) {
           throw new Error(`Request failed: ${response.status}`);
         }
+
         const json = await response.json();
         setData(json);
       } catch (err) {
@@ -61,7 +62,7 @@ export const useFetch = (url = "/mockData.json", options = {}) => {
     fetchData();
 
     return () => controller.abort();
-  }, [url, JSON.stringify(options)]);
+  }, [url]);
 
   /**
    * Return state object with data, loading flag, and error message

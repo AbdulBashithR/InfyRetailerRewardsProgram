@@ -3,8 +3,9 @@
  */
 
 //Package imports
-import { useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import {
   Box,
   Drawer,

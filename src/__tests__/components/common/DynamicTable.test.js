@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import DynamicTable from "../../../components/common/DynamicTable";
 
 describe("DynamicTable - Transactions Data", () => {

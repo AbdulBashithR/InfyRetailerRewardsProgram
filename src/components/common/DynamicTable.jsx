@@ -1,6 +1,8 @@
 //Package imports
-import { memo, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Table,
   TableBody,
@@ -11,8 +13,13 @@ import {
   Paper,
   Typography,
   TableSortLabel,
+  Box,
+  IconButton,
+  CircularProgress,
 } from "@mui/material";
+
 import { sortData } from "../../utils/sortUtils";
+import SearchField from "./SearchField";
 
 /**
  * @fileoverview Dynamic table component that renders tables based on provided data and column configuration.
@@ -37,9 +44,28 @@ import { sortData } from "../../utils/sortUtils";
  * - Empty state display when no data is provided
  *
  */
-const DynamicTable = ({ data = [], columns, title = "Table" }) => {
+const DynamicTable = ({ data = null, columns, title = "Table" }) => {
   const [orderBy, setOrderBy] = useState(null);
   const [order, setOrder] = useState("asc");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = useCallback((term) => {
+    setSearchQuery(term);
+  }, []);
+
+  const filteredData = useMemo(() => {
+    if (!searchQuery) return data;
+
+    const lowerTerm = searchQuery.toLowerCase();
+    return data.filter((row) =>
+      columns.some(({ field }) =>
+        String(row[field] ?? "")
+          .toLowerCase()
+          .includes(lowerTerm),
+      ),
+    );
+  }, [data, searchQuery, columns]);
 
   const handleSort = (columnKey) => {
     if (!columnKey) return;
@@ -50,9 +76,10 @@ const DynamicTable = ({ data = [], columns, title = "Table" }) => {
   };
 
   const sortedData = useMemo(
-    () => sortData(data, orderBy, order),
-    [data, orderBy, order],
+    () => sortData(filteredData, orderBy, order),
+    [filteredData, orderBy, order],
   );
+
   return (
     <Paper
       elevation={3}
@@ -64,12 +91,34 @@ const DynamicTable = ({ data = [], columns, title = "Table" }) => {
       }}
     >
       {title && (
-        <Typography variant="h6" sx={{ p: 2 }}>
-          {title}
-        </Typography>
+        <Box
+          sx={{
+            p: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 2,
+          }}
+        >
+          <Typography variant="h6">{title}</Typography>
+
+          {isSearchVisible ? (
+            <Box sx={{ px: 2 }}>
+              <SearchField
+                onSearch={handleSearch}
+                delay={400}
+                onClear={() => setIsSearchVisible(false)}
+              />
+            </Box>
+          ) : (
+            <IconButton onClick={() => setIsSearchVisible((prev) => !prev)}>
+              <SearchIcon />
+            </IconButton>
+          )}
+        </Box>
       )}
 
-      <TableContainer sx={{ flex: 1, overflow: "auto" }}>
+      <TableContainer sx={{ flex: 1, overflow: "auto", maxHeight: "100%" }}>
         <Table stickyHeader aria-label="dynamic table">
           <TableHead>
             <TableRow>
@@ -88,7 +137,13 @@ const DynamicTable = ({ data = [], columns, title = "Table" }) => {
           </TableHead>
 
           <TableBody>
-            {!data?.length ? (
+            {!sortedData ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} align="center">
+                  <CircularProgress size={28} />
+                </TableCell>
+              </TableRow>
+            ) : sortedData?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length} align="center">
                   No data

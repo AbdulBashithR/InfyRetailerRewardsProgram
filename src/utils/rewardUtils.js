@@ -4,6 +4,8 @@
  * rewards data by customer, month, and year.
  */
 
+import { MONTH_NAMES } from "../constants/tableColumns";
+
 /**
  * Calculate reward points based on purchase price.
  *
@@ -56,24 +58,29 @@ export const getMonthlyRewards = (transactions) => {
    * @type {Object<string, Object>}
    */
   const map = transactions.reduce(
-    (acc, { customerId, customerName, purchaseDate, rewardPoints }) => {
+    (
+      customerMonthlyRewards,
+      { customerId, customerName, purchaseDate, rewardPoints },
+    ) => {
       const date = new Date(purchaseDate);
       const month = date.getMonth() + 1;
+      const monthName = MONTH_NAMES[month - 1] ?? month;
       const year = date.getFullYear();
       const key = `${customerId}-${year}-${month}`;
 
-      if (!acc[key]) {
-        acc[key] = {
+      if (!customerMonthlyRewards[key]) {
+        customerMonthlyRewards[key] = {
           customerId,
           customerName,
           month,
+          monthName,
           year,
           monthlyRewardPoints: 0,
         };
       }
 
-      acc[key].monthlyRewardPoints += rewardPoints || 0;
-      return acc;
+      customerMonthlyRewards[key].monthlyRewardPoints += rewardPoints || 0;
+      return customerMonthlyRewards;
     },
     {},
   );
@@ -97,17 +104,17 @@ export const getTotalRewards = (transactions) => {
    * @type {Object<string, Object>}
    */
   const map = transactions.reduce(
-    (acc, { customerId, customerName, rewardPoints }) => {
-      if (!acc[customerId]) {
-        acc[customerId] = {
+    (aggregatedRewards, { customerId, customerName, rewardPoints }) => {
+      if (!aggregatedRewards[customerId]) {
+        aggregatedRewards[customerId] = {
           customerId,
           customerName,
           totalRewardPoints: 0,
         };
       }
 
-      acc[customerId].totalRewardPoints += rewardPoints || 0;
-      return acc;
+      aggregatedRewards[customerId].totalRewardPoints += rewardPoints || 0;
+      return aggregatedRewards;
     },
     {},
   );

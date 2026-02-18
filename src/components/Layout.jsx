@@ -8,6 +8,10 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 //Third Party Component imports
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import {
   AppBar,
   Toolbar,
@@ -15,14 +19,12 @@ import {
   Typography,
   Avatar,
   Box,
+  Alert,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 //Component imports
-import ErrorBoundary from "./common/ErrorBoundary";
 import { CommonDrawer } from "./common/Drawer";
+import ErrorBoundary from "./common/ErrorBoundary";
 
 /**
  * Navigation links configuration
@@ -85,7 +87,13 @@ const Layout = () => {
       />
 
       <Box sx={{ bgcolor: "#F5F7FA", width: "100%", flex: 1 }}>
-        <ErrorBoundary>
+        <ErrorBoundary
+          fallback={
+            <Alert severity="error">
+              Something went wrong in the current view.
+            </Alert>
+          }
+        >
           <Outlet />
         </ErrorBoundary>
       </Box>

@@ -1,5 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import { Index } from "../../pages/Index";
+
+import { useFetch } from "../../hooks/useFetch";
+import { DashboardView } from "../../pages/DashboardView";
+import {
+  computeRewardsPointsForTransactions,
+  getMonthlyRewards,
+  getTotalRewards,
+  sortByDate,
+} from "../../utils/rewardUtils";
 
 // Mock useFetch hook
 jest.mock("../../hooks/useFetch", () => ({
@@ -25,14 +33,6 @@ jest.mock("../../utils/rewardUtils", () => ({
   sortByDate: jest.fn(),
 }));
 
-import { useFetch } from "../../hooks/useFetch";
-import {
-  computeRewardsPointsForTransactions,
-  getMonthlyRewards,
-  getTotalRewards,
-  sortByDate,
-} from "../../utils/rewardUtils";
-
 describe("Index Page", () => {
   const mockTransactions = [
     {
@@ -57,7 +57,7 @@ describe("Index Page", () => {
       error: null,
     });
 
-    render(<Index />);
+    render(<DashboardView />);
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
@@ -69,7 +69,7 @@ describe("Index Page", () => {
       error: "Failed to fetch data",
     });
 
-    render(<Index />);
+    render(<DashboardView />);
 
     expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
   });
@@ -86,7 +86,7 @@ describe("Index Page", () => {
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);
 
-    render(<Index />);
+    render(<DashboardView />);
 
     expect(screen.getByText("Monthly Rewards")).toBeInTheDocument();
     expect(screen.getByText("Total Rewards")).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe("Index Page", () => {
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);
 
-    render(<Index />);
+    render(<DashboardView />);
 
     expect(computeRewardsPointsForTransactions).toHaveBeenCalledWith(
       mockTransactions,
@@ -127,7 +127,7 @@ describe("Index Page", () => {
     getTotalRewards.mockReturnValue(mockTotal);
     sortByDate.mockReturnValue(mockTransactions);
 
-    render(<Index />);
+    render(<DashboardView />);
 
     expect(screen.getByTestId("rows-Monthly Rewards")).toHaveTextContent("1");
     expect(screen.getByTestId("rows-Total Rewards")).toHaveTextContent("1");
