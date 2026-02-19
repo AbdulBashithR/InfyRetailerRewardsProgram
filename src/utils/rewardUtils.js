@@ -25,7 +25,7 @@ import { MONTH_NAMES } from "../constants/tableColumns";
 export const calculateRewardPoints = (price) => {
   if (price <= 50) return 0;
   if (price <= 100) return Math.floor(price - 50);
-  return Math.floor((price - 100) * 2 + 50);
+  return Math.floor(price - 100) * 2 + 50;
 };
 
 /**
