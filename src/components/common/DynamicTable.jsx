@@ -1,7 +1,6 @@
 //Package imports
 import { memo, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Table,

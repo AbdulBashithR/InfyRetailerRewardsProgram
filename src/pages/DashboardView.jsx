@@ -3,13 +3,12 @@
  */
 
 //PACKAGE IMPORTS
-import { useMemo } from "react";
+import { useMemo, lazy, Suspense } from "react";
 
 import { Alert, CircularProgress, Container, Grid, Box } from "@mui/material";
 
 //COMPONENTS IMPORTS
 import ErrorBoundary from "../components/common/ErrorBoundary";
-import RewardsTable from "../components/ui/RewardsTable";
 
 //CONSTANTS IMPORTS
 import {
@@ -28,6 +27,8 @@ import {
   getTotalRewards,
   sortByDate,
 } from "../utils/rewardUtils";
+
+const RewardsTable = lazy(() => import("../components/ui/RewardsTable"));
 
 /**
  * Index (Dashboard) component - Main dashboard view with rewards overview.
@@ -126,24 +127,28 @@ export const DashboardView = () => {
           {/* Left column: Monthly Rewards Table */}
           <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
             <Box sx={boxStyles}>
-              <RewardsTable
-                data={monthlyRewards}
-                title="Monthly Rewards"
-                columns={monthlyRewardsColumns}
-                errorFallBack="Failed to load User monthly rewards"
-              />
+              <Suspense fallback={<CircularProgress size={28} />}>
+                <RewardsTable
+                  data={monthlyRewards}
+                  title="Monthly Rewards"
+                  columns={monthlyRewardsColumns}
+                  errorFallBack="Failed to load User monthly rewards"
+                />
+              </Suspense>
             </Box>
           </Grid>
 
           {/* Right column: Total Rewards Table */}
           <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
             <Box sx={boxStyles}>
-              <RewardsTable
-                data={totalRewards}
-                title="Total Rewards"
-                columns={totalRewardsColumns}
-                errorFallBack="Failed to load User total rewards"
-              />
+              <Suspense fallback={<CircularProgress size={28} />}>
+                <RewardsTable
+                  data={totalRewards}
+                  title="Total Rewards"
+                  columns={totalRewardsColumns}
+                  errorFallBack="Failed to load User total rewards"
+                />
+              </Suspense>
             </Box>
           </Grid>
         </Grid>
@@ -151,12 +156,14 @@ export const DashboardView = () => {
         {/* Bottom row: Transactions Table (full width) */}
         <Grid item sx={{ height: "50vh", minHeight: 0 }} size={12}>
           <Box sx={boxStyles}>
-            <RewardsTable
-              data={sortedTransactions}
-              title="Transactions"
-              columns={transactionsColumns}
-              errorFallBack="Failed to load transactions"
-            />
+            <Suspense fallback={<CircularProgress size={28} />}>
+              <RewardsTable
+                data={sortedTransactions}
+                title="Transactions"
+                columns={transactionsColumns}
+                errorFallBack="Failed to load transactions"
+              />
+            </Suspense>
           </Box>
         </Grid>
       </Grid>

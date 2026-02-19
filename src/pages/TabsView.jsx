@@ -2,7 +2,8 @@
  * @fileoverview Tabbed view page displaying rewards data in different tab sections.
  */
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense, lazy } from "react";
+
 import {
   Container,
   CircularProgress,
@@ -13,7 +14,6 @@ import {
 } from "@mui/material";
 
 import ErrorBoundary from "../components/common/ErrorBoundary";
-import GridTable from "../components/common/GridTable";
 
 import {
   monthlyRewardsColumns,
@@ -29,7 +29,10 @@ import {
   getTotalRewards,
   sortByDate,
 } from "../utils/rewardUtils";
-import GridRewardsTable from "../components/ui/GridRewardsTable";
+
+const GridRewardsTable = lazy(
+  () => import("../components/ui/GridRewardsTable"),
+);
 
 /**
  * TabsView component - Displays rewards data organized in three tabs.
@@ -118,36 +121,37 @@ const TabsView = () => {
             <Tab label="Transactions" />
           </Tabs>
         </Box>
+        <Suspense fallback={<CircularProgress size={28} />}>
+          {/* Tab 0: Monthly Rewards Table */}
+          {tab === 0 && (
+            <GridRewardsTable
+              data={monthlyRewards}
+              title="Monthly Rewards"
+              columns={monthlyRewardsColumns}
+              errorFallBack="Failed to load User monthly rewards"
+            />
+          )}
 
-        {/* Tab 0: Monthly Rewards Table */}
-        {tab === 0 && (
-          <GridRewardsTable
-            data={monthlyRewards}
-            title="Monthly Rewards"
-            columns={monthlyRewardsColumns}
-            errorFallBack="Failed to load User monthly rewards"
-          />
-        )}
+          {/* Tab 1: Total Rewards Table */}
+          {tab === 1 && (
+            <GridRewardsTable
+              data={totalRewards}
+              title="Total Rewards"
+              columns={totalRewardsColumns}
+              errorFallBack="Failed to load User total rewards"
+            />
+          )}
 
-        {/* Tab 1: Total Rewards Table */}
-        {tab === 1 && (
-          <GridRewardsTable
-            data={totalRewards}
-            title="Total Rewards"
-            columns={totalRewardsColumns}
-            errorFallBack="Failed to load User total rewards"
-          />
-        )}
-
-        {/* Tab 2: Transactions Table */}
-        {tab === 2 && (
-          <GridRewardsTable
-            data={sortedTransactions}
-            title="Transactions"
-            columns={transactionsColumns}
-            errorFallBack="Failed to load transactions"
-          />
-        )}
+          {/* Tab 2: Transactions Table */}
+          {tab === 2 && (
+            <GridRewardsTable
+              data={sortedTransactions}
+              title="Transactions"
+              columns={transactionsColumns}
+              errorFallBack="Failed to load transactions"
+            />
+          )}
+        </Suspense>
       </Container>
     </ErrorBoundary>
   );
