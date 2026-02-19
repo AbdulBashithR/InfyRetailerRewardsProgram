@@ -77,10 +77,6 @@ http://localhost:3001
 - `npm build` – Create production build
 - `npm test` – Run unit tests
 
-## Dynamic Table
-
-![Screenshot](./docs/images/screenshot.png)
-
 ## Application Modules
 
 ### Layout
@@ -89,18 +85,28 @@ http://localhost:3001
 - Navigation drawer
 - Error boundary wrapper
 - Routed content using React Router Outlet
+  ![Drawer With Routes](./docs/images/DrawerWithRoutes.png)
 
-### Dashboard (Index Page)
+### Dashboard (Summarized View)
 
 - Displays total rewards per customer
 - Summary tables for reward insights
 - Shows transaction-level purchase data
+  ![Dashboard View](./docs/images/DashboardViewWithData.png)
 
 ### Detailed View (Tabs View)
 
 - Shows transaction-level purchase data with sorting and pagination
 - Reward points breakdown
 - Displays total rewards per customer
+  ![Tabs View](./docs/images/TabsViewWithData.png)
+
+### Features
+
+- Table data can be filtered based using Search Input Filter
+- Search data across the column
+- Date Filter allow to filter date specific data
+  ![Filter](./docs/images/SearchOptionDynamicTable.png)
 
 ## Reward Logic
 
@@ -146,6 +152,65 @@ Test files location:
 ```
 src/__tests__/
 ```
+
+## Features Tested
+
+### 1. API Error
+
+Ensures the dashboard handles runtime and API errors gracefully without breaking the UI.
+
+**Validations**
+
+- Fallback UI is displayed on error
+- Error boundary behavior is verified
+- Application does not crash on unexpected failures
+  ![Drawer With Routes](./docs/images/DashboardPageApiError.png)
+
+### 2. No Data State
+
+Checks UI behavior when no records are available.
+
+**Validations**
+
+- Displays “No Data Available” message
+- Table layout is hidden when dataset is empty
+- Handles null and empty API responses properly
+  ![Tabs View Without Data](./docs/images/TabsViewNoData.png)
+  ![Dashboard without Data](./docs/images/DashboardViewNoDataOg.png)
+
+### 3. Data Error in Dynamic Table
+
+Ensures the Dynamic Table handles errors gracefully without breaking the UI.
+
+**Validations**
+
+- Fallback UI is displayed on error
+- Error boundary behavior is verified
+- Application does not crash on unexpected failures
+  ![Error Handling in Dynamic Table](./docs/images/DynamicTableError.png)
+
+### 4. Syntax Error in Grid Table
+
+Ensures the Grid Table handles errors gracefully without breaking the UI.
+
+**Validations**
+
+- Fallback UI is displayed on error
+- Error boundary behavior is verified
+- Application does not crash on unexpected failures
+  ![Error Handling in Grid Table](./docs/images/GridTableError.png)
+
+## 5. Wrong Route Handling
+
+This test verifies that the application correctly handles navigation to an invalid or non-existent route (wrong URL) without crashing and displays a proper fallback page.
+
+**Validations**
+
+- Application should not crash on unknown routes
+- Displays a 404 / Not Found page or fallback UI
+- Redirects to a safe route
+
+![Route Not Found Page](./docs/images/GridTableError.png)
 
 ## Code Standards
 
