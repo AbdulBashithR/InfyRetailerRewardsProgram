@@ -77,6 +77,10 @@ http://localhost:3001
 - `npm build` – Create production build
 - `npm test` – Run unit tests
 
+## Dynamic Table
+
+![Screenshot](./docs/images/screenshot.png)
+
 ## Application Modules
 
 ### Layout
