@@ -2,10 +2,11 @@
  * @fileoverview Data grid table component using MUI X DataGrid for large datasets.
  */
 
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { Paper, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { TableHeader } from "./TableHeader";
 
 /**
  * GridTable component - Renders a reusable MUI DataGrid with pagination and sorting.
@@ -26,18 +27,25 @@ import { DataGrid } from "@mui/x-data-grid";
  * - Automatic ID generation for rows
  * - Responsive flex layout
  */
-const GridTable = ({ data, columns, title }) => {
+const GridTable = ({
+  data,
+  columns,
+  title,
+  isDateSearchable = false,
+  searchableDateField = "",
+}) => {
+  const [filteredData, setFilteredData] = useState(data);
   /**
    * Memoized rows with unique ID generation
    * Uses existing id, falls back to transactionId, then to index
    */
   const rows = useMemo(
     () =>
-      (data ?? []).map((row, index) => ({
+      (filteredData ?? []).map((row, index) => ({
         id: row.id ?? row.transactionId ?? `${index}`, // ensure unique id
         ...row,
       })),
-    [data],
+    [filteredData],
   );
 
   /**
@@ -81,11 +89,14 @@ const GridTable = ({ data, columns, title }) => {
         p: 2,
       }}
     >
-      {title && (
-        <Typography variant="h6" sx={{ mb: 2 }}>
-          {title}
-        </Typography>
-      )}
+      <TableHeader
+        data={data}
+        setData={setFilteredData}
+        columns={columns}
+        title={title}
+        isDateSearchable={isDateSearchable}
+        searchableDateField={searchableDateField}
+      />
 
       <div style={{ flex: 1 }}>
         <DataGrid

@@ -37,7 +37,6 @@ const SearchField = ({
 
   return (
     <TextField
-      fullWidth
       size="small"
       value={value}
       onChange={(e) => setValue(e.target.value)}

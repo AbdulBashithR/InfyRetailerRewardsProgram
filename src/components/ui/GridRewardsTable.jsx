@@ -22,10 +22,18 @@ const GridRewardsTable = ({
   title,
   columns,
   errorFallBack = "Failed to load data",
+  isDateSearchable = false,
+  searchableDateField = undefined,
 }) => {
   return (
     <ErrorBoundary fallback={<Alert severity="error">{errorFallBack}</Alert>}>
-      <GridTable title={title} data={data} columns={columns} />
+      <GridTable
+        title={title}
+        data={data}
+        columns={columns}
+        isDateSearchable={isDateSearchable}
+        searchableDateField={searchableDateField}
+      />
     </ErrorBoundary>
   );
 };

@@ -1,7 +1,7 @@
 //Package imports
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import SearchIcon from "@mui/icons-material/Search";
+
 import {
   Table,
   TableBody,
@@ -10,15 +10,12 @@ import {
   TableRow,
   TableContainer,
   Paper,
-  Typography,
   TableSortLabel,
-  Box,
-  IconButton,
   CircularProgress,
 } from "@mui/material";
 
 import { sortData } from "../../utils/sortUtils";
-import SearchField from "./SearchField";
+import { TableHeader } from "./TableHeader";
 
 /**
  * @fileoverview Dynamic table component that renders tables based on provided data and column configuration.
@@ -43,28 +40,16 @@ import SearchField from "./SearchField";
  * - Empty state display when no data is provided
  *
  */
-const DynamicTable = ({ data = null, columns, title = "Table" }) => {
+const DynamicTable = ({
+  data = null,
+  columns,
+  title = "Table",
+  isDateSearchable = false,
+  searchableDateField = undefined,
+}) => {
+  const [filteredData, setFilteredData] = useState(data);
   const [orderBy, setOrderBy] = useState(null);
   const [order, setOrder] = useState("asc");
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = useCallback((term) => {
-    setSearchQuery(term);
-  }, []);
-
-  const filteredData = useMemo(() => {
-    if (!searchQuery) return data;
-
-    const lowerTerm = searchQuery.toLowerCase();
-    return data.filter((row) =>
-      columns.some(({ field }) =>
-        String(row[field] ?? "")
-          .toLowerCase()
-          .includes(lowerTerm),
-      ),
-    );
-  }, [data, searchQuery, columns]);
 
   const handleSort = (columnKey) => {
     if (!columnKey) return;
@@ -89,33 +74,14 @@ const DynamicTable = ({ data = null, columns, title = "Table" }) => {
         borderRadius: 2,
       }}
     >
-      {title && (
-        <Box
-          sx={{
-            p: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 2,
-          }}
-        >
-          <Typography variant="h6">{title}</Typography>
-
-          {isSearchVisible ? (
-            <Box sx={{ px: 2 }}>
-              <SearchField
-                onSearch={handleSearch}
-                delay={400}
-                onClear={() => setIsSearchVisible(false)}
-              />
-            </Box>
-          ) : (
-            <IconButton onClick={() => setIsSearchVisible((prev) => !prev)}>
-              <SearchIcon />
-            </IconButton>
-          )}
-        </Box>
-      )}
+      <TableHeader
+        data={data}
+        setData={setFilteredData}
+        columns={columns}
+        title={title}
+        isDateSearchable={isDateSearchable}
+        searchableDateField={searchableDateField}
+      />
 
       <TableContainer sx={{ flex: 1, overflow: "auto", maxHeight: "100%" }}>
         <Table stickyHeader aria-label="dynamic table">

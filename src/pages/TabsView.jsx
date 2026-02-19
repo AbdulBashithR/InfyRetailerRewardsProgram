@@ -149,6 +149,8 @@ const TabsView = () => {
               title="Transactions"
               columns={transactionsColumns}
               errorFallBack="Failed to load transactions"
+              isDateSearchable={true}
+              searchableDateField="purchaseDate"
             />
           )}
         </Suspense>

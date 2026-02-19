@@ -29,10 +29,18 @@ const RewardsTable = ({
   title,
   columns,
   errorFallBack = "Failed to load data",
+  isDateSearchable = false,
+  searchableDateField = undefined,
 }) => {
   return (
     <ErrorBoundary fallback={<Alert severity="error">{errorFallBack}</Alert>}>
-      <DynamicTable title={title} data={data} columns={columns} />
+      <DynamicTable
+        title={title}
+        data={data}
+        columns={columns}
+        isDateSearchable={isDateSearchable}
+        searchableDateField={searchableDateField}
+      />
     </ErrorBoundary>
   );
 };
@@ -54,6 +62,8 @@ RewardsTable.propTypes = {
    * Error message to display in the fallback alert
    */
   errorFallBack: PropTypes.string,
+  isDateSearchable: PropTypes.bool,
+  searchableDateField: PropTypes.string,
 };
 
 export default memo(RewardsTable);

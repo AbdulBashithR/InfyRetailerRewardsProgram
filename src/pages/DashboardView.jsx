@@ -162,6 +162,8 @@ export const DashboardView = () => {
                 title="Transactions"
                 columns={transactionsColumns}
                 errorFallBack="Failed to load transactions"
+                isDateSearchable={true}
+                searchableDateField="purchaseDate"
               />
             </Suspense>
           </Box>
