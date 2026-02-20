@@ -79,14 +79,6 @@ http://localhost:3001
 
 ## Application Modules
 
-### Layout
-
-- AppBar with title and avatar
-- Navigation drawer
-- Error boundary wrapper
-- Routed content using React Router Outlet
-  ![Drawer With Routes](./docs/images/DrawerWithRoutes.png)
-
 ### Dashboard (Summarized View)
 
 - Displays total rewards per customer
@@ -148,7 +140,7 @@ src/__tests__/
 
 ## Test Case Summary
 
-![Drawer With Routes](./docs/images/TestCaseResult.png)
+![Test Case Summary](./docs/images/TestCaseResult.png)
 
 ## Features Tested
 
