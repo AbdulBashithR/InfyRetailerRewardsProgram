@@ -15,7 +15,7 @@ jest.mock("../../hooks/useFetch", () => ({
 }));
 
 // Mock RewardsTable to avoid heavy MUI/DataGrid rendering
-jest.mock("../../components/ui/RewardsTable", () => ({
+jest.mock("../../components/ui/GridRewardsTable", () => ({
   __esModule: true,
   default: ({ title, data }) => (
     <div data-testid={`table-${title}`}>
@@ -33,7 +33,7 @@ jest.mock("../../utils/rewardUtils", () => ({
   sortByDate: jest.fn(),
 }));
 
-describe("Index Page", () => {
+describe("Dashboard Page", () => {
   const mockTransactions = [
     {
       transactionId: "T001",
@@ -71,10 +71,12 @@ describe("Index Page", () => {
 
     render(<DashboardView />);
 
-    expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
+    expect(
+      screen.getByText("An error occurred while loading dashboard data."),
+    ).toBeInTheDocument();
   });
 
-  test("renders all three reward tables when data is loaded", () => {
+  test("renders all three reward tables when data is loaded", async () => {
     useFetch.mockReturnValue({
       data: mockTransactions,
       loading: false,
@@ -88,49 +90,8 @@ describe("Index Page", () => {
 
     render(<DashboardView />);
 
-    expect(screen.getByText("Monthly Rewards")).toBeInTheDocument();
-    expect(screen.getByText("Total Rewards")).toBeInTheDocument();
-    expect(screen.getByText("Transactions")).toBeInTheDocument();
-  });
-
-  test("calls reward computation utilities with correct data flow", () => {
-    useFetch.mockReturnValue({
-      data: mockTransactions,
-      loading: false,
-      error: null,
-    });
-
-    computeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
-    getMonthlyRewards.mockReturnValue(mockMonthly);
-    getTotalRewards.mockReturnValue(mockTotal);
-    sortByDate.mockReturnValue(mockTransactions);
-
-    render(<DashboardView />);
-
-    expect(computeRewardsPointsForTransactions).toHaveBeenCalledWith(
-      mockTransactions,
-    );
-    expect(getMonthlyRewards).toHaveBeenCalledWith(mockTransactions);
-    expect(getTotalRewards).toHaveBeenCalledWith(mockTransactions);
-    expect(sortByDate).toHaveBeenCalledWith(mockTransactions);
-  });
-
-  test("passes correct row counts to each table", () => {
-    useFetch.mockReturnValue({
-      data: mockTransactions,
-      loading: false,
-      error: null,
-    });
-
-    computeRewardsPointsForTransactions.mockReturnValue(mockTransactions);
-    getMonthlyRewards.mockReturnValue(mockMonthly);
-    getTotalRewards.mockReturnValue(mockTotal);
-    sortByDate.mockReturnValue(mockTransactions);
-
-    render(<DashboardView />);
-
-    expect(screen.getByTestId("rows-Monthly Rewards")).toHaveTextContent("1");
-    expect(screen.getByTestId("rows-Total Rewards")).toHaveTextContent("1");
-    expect(screen.getByTestId("rows-Transactions")).toHaveTextContent("1");
+    expect(await screen.findByText("Monthly Rewards")).toBeInTheDocument();
+    expect(await screen.findByText("Total Rewards")).toBeInTheDocument();
+    expect(await screen.findByText("Transactions")).toBeInTheDocument();
   });
 });

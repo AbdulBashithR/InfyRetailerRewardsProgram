@@ -20,6 +20,16 @@ import {
 //HOOKS IMPORTS
 import { useFetch } from "../hooks/useFetch";
 
+//STYLES IMPORTS
+import {
+  DashboardPageBoxStyles as boxStyles,
+  DashboardGridHeight,
+  DashboardGridItemHeight,
+  DashboardGridSubItemHeight,
+  LoaderBoxStyles,
+  marginTop4,
+} from "../styles";
+
 //UTILS IMPORTS
 import {
   computeRewardsPointsForTransactions,
@@ -28,7 +38,9 @@ import {
   sortByDate,
 } from "../utils/rewardUtils";
 
-const RewardsTable = lazy(() => import("../components/ui/RewardsTable"));
+const GridRewardsTable = lazy(
+  () => import("../components/ui/GridRewardsTable"),
+);
 
 /**
  * Index (Dashboard) component - Main dashboard view with rewards overview.
@@ -36,15 +48,7 @@ const RewardsTable = lazy(() => import("../components/ui/RewardsTable"));
  * @component
  * @returns {React.ReactElement} Dashboard grid with three rewards tables
  *
- * @description
- * Main dashboard page that displays rewards data in a 2x2 grid layout:
- * - Monthly Rewards table (50% height)
- * - Total Rewards table (50% height)
- * - Bottom: Transactions table (50% height, full width)
- *
- * Fetches transaction data and computes various aggregations using useMemo
- * for performance optimization. Includes loading and error states.
- 
+
  */
 export const DashboardView = () => {
   /**
@@ -57,13 +61,6 @@ export const DashboardView = () => {
    * Reusable box styling for table containers
    * @type {Object}
    */
-  const boxStyles = {
-    /** Full height box with scrollable content */
-    height: "100%",
-    overflow: "auto",
-    p: 2,
-    boxSizing: "border-box",
-  };
 
   /**
    * Memoized computed transactions with reward points
@@ -93,7 +90,7 @@ export const DashboardView = () => {
    */
   if (loading) {
     return (
-      <Container sx={{ display: "flex", justifyContent: "center", mt: 8 }}>
+      <Container sx={LoaderBoxStyles}>
         <CircularProgress />
       </Container>
     );
@@ -104,7 +101,7 @@ export const DashboardView = () => {
    */
   if (error) {
     return (
-      <Container sx={{ mt: 4 }}>
+      <Container sx={marginTop4}>
         <Alert severity="error">
           {error?.message ?? "An error occurred while loading dashboard data."}
         </Alert>
@@ -116,19 +113,14 @@ export const DashboardView = () => {
     <ErrorBoundary
       fallback={<Alert severity="error">Failed to Dashboard Component</Alert>}
     >
-      <Grid
-        container
-        sx={{
-          height: "100vh",
-        }}
-      >
+      <Grid container sx={DashboardGridHeight}>
         {/* Top row: Monthly Rewards (left) and Total Rewards (right) */}
-        <Grid container sx={{ height: "50vh", minHeight: 0 }} size={12}>
+        <Grid container sx={DashboardGridItemHeight} size={12}>
           {/* Left column: Monthly Rewards Table */}
-          <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
+          <Grid sx={DashboardGridSubItemHeight} size={6}>
             <Box sx={boxStyles}>
               <Suspense fallback={<CircularProgress size={28} />}>
-                <RewardsTable
+                <GridRewardsTable
                   data={monthlyRewards}
                   title="Monthly Rewards"
                   columns={monthlyRewardsColumns}
@@ -139,10 +131,10 @@ export const DashboardView = () => {
           </Grid>
 
           {/* Right column: Total Rewards Table */}
-          <Grid item sx={{ height: "100%", minHeight: 0 }} size={6}>
+          <Grid sx={DashboardGridSubItemHeight} size={6}>
             <Box sx={boxStyles}>
               <Suspense fallback={<CircularProgress size={28} />}>
-                <RewardsTable
+                <GridRewardsTable
                   data={totalRewards}
                   title="Total Rewards"
                   columns={totalRewardsColumns}
@@ -154,10 +146,10 @@ export const DashboardView = () => {
         </Grid>
 
         {/* Bottom row: Transactions Table (full width) */}
-        <Grid item sx={{ height: "50vh", minHeight: 0 }} size={12}>
+        <Grid sx={DashboardGridItemHeight} size={12}>
           <Box sx={boxStyles}>
             <Suspense fallback={<CircularProgress size={28} />}>
-              <RewardsTable
+              <GridRewardsTable
                 data={sortedTransactions}
                 title="Transactions"
                 columns={transactionsColumns}

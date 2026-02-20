@@ -1,9 +1,14 @@
 /**
  * @fileoverview 404 Not Found page component.
  */
-
-import { Container, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Container, Box, Typography, Button } from "@mui/material";
+import {
+  marginBottom2,
+  marginTop2,
+  NotFoundBoxStyles,
+  NotFoundTypographyStyles,
+} from "../styles";
 
 /**
  * @returns {React.ReactElement} 404 error page with navigation option
@@ -13,20 +18,11 @@ const NotFound = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "400px",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h1" sx={{ fontSize: "4rem", fontWeight: "bold" }}>
+      <Box sx={NotFoundBoxStyles}>
+        <Typography variant="h1" sx={NotFoundTypographyStyles}>
           404
         </Typography>
-        <Typography variant="h5" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={marginBottom2}>
           Page Not Found
         </Typography>
         <Typography variant="body1" sx={{ mb: 4, color: "text.secondary" }}>
@@ -35,7 +31,7 @@ const NotFound = () => {
         <Button
           variant="contained"
           onClick={() => navigate("/")}
-          sx={{ mt: 2 }}
+          sx={marginTop2}
         >
           Go to Home
         </Button>

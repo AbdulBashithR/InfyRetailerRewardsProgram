@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import DateRangeIcon from "@mui/icons-material/DateRange";
 import {
   IconButton,
   Popover,
@@ -10,7 +11,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import Badge from "@mui/material/Badge";
-import DateRangeIcon from "@mui/icons-material/DateRange";
 
 /**
  * DateRangePopover Component

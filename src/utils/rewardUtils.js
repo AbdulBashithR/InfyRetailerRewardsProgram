@@ -23,6 +23,9 @@ import { MONTH_NAMES } from "../constants/tableColumns";
  * calculateRewardPoints(150);  // Returns 150 (50 + (150-100)*2)
  */
 export const calculateRewardPoints = (price) => {
+  const amount = Number(price);
+
+  if (!Number.isFinite(amount) || amount < 0) return 0;
   if (price <= 50) return 0;
   if (price <= 100) return Math.floor(price - 50);
   return Math.floor(price - 100) * 2 + 50;
@@ -63,10 +66,11 @@ export const getMonthlyRewards = (transactions) => {
       { customerId, customerName, purchaseDate, rewardPoints },
     ) => {
       const date = new Date(purchaseDate);
-      const month = date.getMonth() + 1;
-      const monthName = MONTH_NAMES[month - 1] ?? month;
+      const monthNumber = date.getMonth() + 1;
+      const monthName = MONTH_NAMES[monthNumber - 1] ?? monthNumber;
       const year = date.getFullYear();
-      const key = `${customerId}-${year}-${month}`;
+      const key = `${customerId}-${year}-${monthNumber}`;
+      const month = `${monthName} ${year}`;
 
       if (!customerMonthlyRewards[key]) {
         customerMonthlyRewards[key] = {
@@ -75,6 +79,7 @@ export const getMonthlyRewards = (transactions) => {
           month,
           monthName,
           year,
+          monthNumber,
           monthlyRewardPoints: 0,
         };
       }
@@ -86,7 +91,7 @@ export const getMonthlyRewards = (transactions) => {
   );
 
   return Object.values(map).sort(
-    (a, b) => a.year - b.year || a.month - b.month,
+    (a, b) => a.year - b.year || a.monthNumber - b.monthNumber,
   );
 };
 

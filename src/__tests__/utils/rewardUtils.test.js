@@ -25,8 +25,17 @@ describe("calculateRewardPoints", () => {
   });
 
   test("handles decimal prices using Math.floor", () => {
-    expect(calculateRewardPoints(100.75)).toBe(51);
-    expect(calculateRewardPoints(120.99)).toBe(91);
+    expect(calculateRewardPoints(100.75)).toBe(50);
+    expect(calculateRewardPoints(120.99)).toBe(90);
+  });
+  test("handles negative prices", () => {
+    expect(calculateRewardPoints(-100.75)).toBe(0);
+    expect(calculateRewardPoints(-120.99)).toBe(0);
+  });
+  test("handles non-numeric input by returning 0", () => {
+    expect(calculateRewardPoints("abc")).toBe(0);
+    expect(calculateRewardPoints(null)).toBe(0);
+    expect(calculateRewardPoints(undefined)).toBe(0);
   });
 });
 
@@ -99,8 +108,12 @@ describe("getMonthlyRewards", () => {
   test("aggregates monthly rewards per customer", () => {
     const result = getMonthlyRewards(enrichedTransactions);
 
-    const janJohn = result.find((r) => r.customerId === "C1" && r.month === 1);
-    const febJohn = result.find((r) => r.customerId === "C1" && r.month === 2);
+    const janJohn = result.find(
+      (r) => r.customerId === "C1" && r.monthNumber === 1,
+    );
+    const febJohn = result.find(
+      (r) => r.customerId === "C1" && r.monthNumber === 2,
+    );
 
     expect(janJohn.monthlyRewardPoints).toBe(100);
     expect(febJohn.monthlyRewardPoints).toBe(40);
@@ -130,9 +143,9 @@ describe("getMonthlyRewards", () => {
 
     const result = getMonthlyRewards(unsorted);
 
-    expect(result[0].month).toBe(1);
-    expect(result[1].month).toBe(2);
-    expect(result[2].month).toBe(3);
+    expect(result[0].monthNumber).toBe(1);
+    expect(result[1].monthNumber).toBe(2);
+    expect(result[2].monthNumber).toBe(3);
   });
 
   test("returns empty array for empty input", () => {

@@ -4,8 +4,10 @@
 
 import { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { Paper, Typography } from "@mui/material";
+import { Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+
+import { GridTableHeaderStyles, TableContainerStyles } from "../../styles";
 import { TableHeader } from "./TableHeader";
 
 /**
@@ -16,6 +18,8 @@ import { TableHeader } from "./TableHeader";
  * @param {Array} props.data - Array of row objects to display
  * @param {Array} props.columns - Column configuration array
  * @param {string} props.title - Optional title to display above the grid
+ * @param {boolean} [props.isDateSearchable] - Flag to enable date search functionality
+ * @param {string} [props.searchableDateField] - Field name to use for date searching
  * @returns {React.ReactElement} MUI DataGrid component wrapped in Paper
  *
  * @description
@@ -42,7 +46,7 @@ const GridTable = ({
   const rows = useMemo(
     () =>
       (filteredData ?? []).map((row, index) => ({
-        id: row.id ?? row.transactionId ?? `${index}`, // ensure unique id
+        id: row.id ?? row.transactionId ?? `${index}`,
         ...row,
       })),
     [filteredData],
@@ -79,16 +83,7 @@ const GridTable = ({
   );
 
   return (
-    <Paper
-      elevation={3}
-      sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        borderRadius: 2,
-        p: 2,
-      }}
-    >
+    <Paper elevation={3} sx={TableContainerStyles}>
       <TableHeader
         data={data}
         setData={setFilteredData}
@@ -98,7 +93,7 @@ const GridTable = ({
         searchableDateField={searchableDateField}
       />
 
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, minHeight: 0 }}>
         <DataGrid
           rows={rows}
           columns={gridColumns}
@@ -109,9 +104,7 @@ const GridTable = ({
               paginationModel: { pageSize: 10, page: 0 },
             },
           }}
-          sx={{
-            border: "none",
-          }}
+          sx={GridTableHeaderStyles}
         />
       </div>
     </Paper>
@@ -150,6 +143,14 @@ GridTable.propTypes = {
       render: PropTypes.func,
     }),
   ).isRequired,
+  /**
+   * Flag to enable date search functionality in the table
+   */
+  isDateSearchable: PropTypes.bool,
+  /**
+   * Field name to use for date searching when isDateSearchable is true
+   */
+  searchableDateField: PropTypes.string,
 };
 
 export default memo(GridTable);

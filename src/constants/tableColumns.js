@@ -22,6 +22,11 @@ export const MONTH_NAMES = [
   "December",
 ];
 
+// Default locale and currency settings for price formatting
+export const DEFAULT_LOCALE = "en-US";
+export const DEFAULT_CURRENCY = "USD";
+export const PRICE_DECIMALS = 2;
+
 /**
  * Column configuration for Monthly Rewards table
  * Displays customer monthly reward points aggregated by customer, month, and year
@@ -38,11 +43,7 @@ export const MONTH_NAMES = [
 export const monthlyRewardsColumns = [
   { field: "customerId", headerName: "Customer ID" },
   { field: "customerName", headerName: "Customer Name" },
-  {
-    field: "monthName",
-    headerName: "Month",
-  },
-  { field: "year", headerName: "Year" },
+  { field: "month", headerName: "Month" },
   {
     field: "monthlyRewardPoints",
     headerName: "Reward Points",
@@ -102,7 +103,17 @@ export const transactionsColumns = [
     field: "price",
     headerName: "Price",
     align: "right",
-    render: (value) => value?.toFixed(2),
+    render: (value) => {
+      if (value === null || value === undefined || value === "") return "-";
+      const num = Number(value);
+      if (Number.isNaN(num)) return String(value);
+      return new Intl.NumberFormat(DEFAULT_LOCALE, {
+        style: "currency",
+        currency: DEFAULT_CURRENCY,
+        minimumFractionDigits: PRICE_DECIMALS,
+        maximumFractionDigits: PRICE_DECIMALS,
+      }).format(num);
+    },
   },
   {
     field: "rewardPoints",

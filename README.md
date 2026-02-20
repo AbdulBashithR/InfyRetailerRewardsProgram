@@ -94,13 +94,6 @@ http://localhost:3001
 - Shows transaction-level purchase data
   ![Dashboard View](./docs/images/DashboardViewWithData.png)
 
-### Detailed View (Tabs View)
-
-- Shows transaction-level purchase data with sorting and pagination
-- Reward points breakdown
-- Displays total rewards per customer
-  ![Tabs View](./docs/images/TabsViewWithData.png)
-
 ### Features
 
 - Table data can be filtered based using Search Input Filter
@@ -175,21 +168,9 @@ Checks UI behavior when no records are available.
 - Displays “No Data Available” message
 - Table layout is hidden when dataset is empty
 - Handles null and empty API responses properly
-  ![Tabs View Without Data](./docs/images/TabsViewNoData.png)
   ![Dashboard without Data](./docs/images/DashboardViewNoDataOg.png)
 
-### 3. Data Error in Dynamic Table
-
-Ensures the Dynamic Table handles errors gracefully without breaking the UI.
-
-**Validations**
-
-- Fallback UI is displayed on error
-- Error boundary behavior is verified
-- Application does not crash on unexpected failures
-  ![Error Handling in Dynamic Table](./docs/images/DynamicTableError.png)
-
-### 4. Syntax Error in Grid Table
+### 3. Syntax Error in Grid Table
 
 Ensures the Grid Table handles errors gracefully without breaking the UI.
 
@@ -200,7 +181,7 @@ Ensures the Grid Table handles errors gracefully without breaking the UI.
 - Application does not crash on unexpected failures
   ![Error Handling in Grid Table](./docs/images/GridTableError.png)
 
-## 5. Wrong Route Handling
+## 4. Wrong Route Handling
 
 This test verifies that the application correctly handles navigation to an invalid or non-existent route (wrong URL) without crashing and displays a proper fallback page.
 

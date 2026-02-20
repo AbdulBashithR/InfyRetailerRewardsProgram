@@ -4,13 +4,12 @@
  */
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Alert } from "@mui/material";
 
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Layout from "./components/Layout";
 import { DashboardView } from "./pages/DashboardView";
-import TabsView from "./pages/TabsView";
 import NotFound from "./pages/NotFound";
-import { Alert } from "@mui/material";
 
 /**
  * App component - Main application entry point with routing setup.
@@ -33,7 +32,6 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<DashboardView />} />
-            <Route path="/tabs" element={<TabsView />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

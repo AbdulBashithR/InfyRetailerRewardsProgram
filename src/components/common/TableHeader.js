@@ -1,9 +1,15 @@
-import { Box, IconButton, Typography } from "@mui/material";
-import SearchField from "./SearchField";
-import DateRangePopover from "./DateRangeFilter";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { filterByDateRange } from "../../utils/filterUtils";
+import { useCallback, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { Box, IconButton, Typography } from "@mui/material";
+import {
+  CardHeadignStyles,
+  HeaderActionBoxStyles,
+  TableHeaderStyles,
+} from "../../styles";
+import { filterByDateRange } from "../../utils/filterUtils";
+
+import DateRangePopover from "./DateRangeFilter";
+import SearchField from "./SearchField";
 
 export const TableHeader = ({
   data,
@@ -54,28 +60,14 @@ export const TableHeader = ({
     }
 
     setData(filtered);
-  }, [data, searchQuery, columns, dateRange, searchableDateField]);
+  }, [data, setData, searchQuery, columns, dateRange, searchableDateField]);
 
   return (
-    <Box
-      sx={{
-        p: 2,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 2,
-      }}
-    >
-      <Typography variant="h6">{title}</Typography>
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          gap: 1,
-        }}
-      >
+    <Box sx={TableHeaderStyles}>
+      <Typography variant="h6" sx={CardHeadignStyles}>
+        {title}
+      </Typography>
+      <Box sx={HeaderActionBoxStyles}>
         {isSearchVisible ? (
           <SearchField
             onSearch={handleSearch}

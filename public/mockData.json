@@ -15998,5 +15998,13 @@
     "purchaseDate": "2026-01-17",
     "productPurchased": "Towel Set",
     "price": 112.3
+  },
+  {
+    "transactionId": "T2001",
+    "customerId": "AB001",
+    "customerName": "Abdul Bashith",
+    "purchaseDate": "2026-01-17",
+    "productPurchased": "Laptop",
+    "price": -220.23
   }
 ]
