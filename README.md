@@ -191,7 +191,7 @@ This test verifies that the application correctly handles navigation to an inval
 - Displays a 404 / Not Found page or fallback UI
 - Redirects to a safe route
 
-![Route Not Found Page](./docs/images/GridTableError.png)
+![Route Not Found Page](./docs/images/WrongRoute.png)
 
 ## Code Standards
 
