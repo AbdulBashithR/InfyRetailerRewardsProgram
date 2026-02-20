@@ -53,12 +53,16 @@ const DateRangePopover = ({ onApply, initialStartDate, initialEndDate }) => {
     <>
       <Tooltip title="Filter by date range">
         <Badge
-          color="primary"
+          color="secondary"
           overlap="circular"
           variant="dot"
           invisible={!startDate && !endDate}
         >
-          <IconButton onClick={handleOpen} aria-label="date-range-filter">
+          <IconButton
+            color="inherit"
+            onClick={handleOpen}
+            aria-label="date-range-filter"
+          >
             <DateRangeIcon />
           </IconButton>
         </Badge>

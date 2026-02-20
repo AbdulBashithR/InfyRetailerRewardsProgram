@@ -43,7 +43,13 @@ export const PRICE_DECIMALS = 2;
 export const monthlyRewardsColumns = [
   { field: "customerId", headerName: "Customer ID" },
   { field: "customerName", headerName: "Customer Name" },
-  { field: "month", headerName: "Month" },
+  {
+    field: "monthDate",
+    headerName: "Month",
+    render: (params) =>
+      params.toLocaleString("en-US", { month: "long" }) +
+      ` ${params.getFullYear()}`,
+  },
   {
     field: "monthlyRewardPoints",
     headerName: "Reward Points",

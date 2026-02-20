@@ -71,6 +71,7 @@ export const getMonthlyRewards = (transactions) => {
       const year = date.getFullYear();
       const key = `${customerId}-${year}-${monthNumber}`;
       const month = `${monthName} ${year}`;
+      const firstDayOfMonth = new Date(year, monthNumber - 1, 1);
 
       if (!customerMonthlyRewards[key]) {
         customerMonthlyRewards[key] = {
@@ -81,6 +82,7 @@ export const getMonthlyRewards = (transactions) => {
           year,
           monthNumber,
           monthlyRewardPoints: 0,
+          monthDate: firstDayOfMonth,
         };
       }
 

@@ -146,6 +146,10 @@ Test files location:
 src/__tests__/
 ```
 
+## Test Case Summary
+
+![Drawer With Routes](./docs/images/TestCaseResult.png)
+
 ## Features Tested
 
 ### 1. API Error

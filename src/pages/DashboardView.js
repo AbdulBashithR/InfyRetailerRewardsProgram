@@ -3,7 +3,8 @@
  */
 
 //PACKAGE IMPORTS
-import { useMemo, lazy, Suspense } from "react";
+import { useMemo, lazy, Suspense, useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import { Alert, CircularProgress, Container, Grid, Box } from "@mui/material";
 
@@ -31,6 +32,7 @@ import {
 } from "../styles";
 
 //UTILS IMPORTS
+import { filterByDateRange } from "../utils/filterUtils";
 import {
   computeRewardsPointsForTransactions,
   getMonthlyRewards,
@@ -56,19 +58,30 @@ export const DashboardView = () => {
    * @type {Object}
    */
   const { data, loading, error } = useFetch("/mockData.json");
+  const filterDate = useOutletContext();
+  const [filteredData, setFilteredData] = useState(data);
+  useEffect(() => {
+    if (!filterDate || (!filterDate.startDate && !filterDate.endDate)) {
+      setFilteredData(data);
+      return;
+    }
 
-  /**
-   * Reusable box styling for table containers
-   * @type {Object}
-   */
+    const filtered = filterByDateRange(
+      data,
+      filterDate?.startDate,
+      filterDate?.endDate,
+      "purchaseDate",
+    );
+    setFilteredData(filtered);
+  }, [data, filterDate]);
 
   /**
    * Memoized computed transactions with reward points
    * Recalculates only when data changes
    */
   const transactions = useMemo(
-    () => computeRewardsPointsForTransactions(data ?? []),
-    [data],
+    () => computeRewardsPointsForTransactions(filteredData ?? []),
+    [filteredData],
   );
   const monthlyRewards = useMemo(
     () => getMonthlyRewards(transactions),

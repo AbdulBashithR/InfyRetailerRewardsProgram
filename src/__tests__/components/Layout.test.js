@@ -11,7 +11,9 @@ jest.mock("../../components/common/ErrorBoundary", () => ({
 describe("Layout Component", () => {
   const renderLayout = () =>
     render(
-      <MemoryRouter>
+      <MemoryRouter
+        future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
+      >
         <Layout />
       </MemoryRouter>,
     );
