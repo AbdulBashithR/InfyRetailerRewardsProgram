@@ -4,8 +4,6 @@
  * rewards data by customer, month, and year.
  */
 
-import { MONTH_NAMES } from "../constants/tableColumns";
-
 /**
  * Calculate reward points based on purchase price.
  *

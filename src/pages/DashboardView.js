@@ -6,10 +6,11 @@
 import { useMemo, lazy, Suspense, useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import { Alert, CircularProgress, Container, Grid, Box } from "@mui/material";
+import { Alert, Container, Grid, Box } from "@mui/material";
 
 //COMPONENTS IMPORTS
 import ErrorBoundary from "../components/common/ErrorBoundary";
+import { Loader } from "../components/common/Loader";
 
 //CONSTANTS IMPORTS
 import {
@@ -27,7 +28,6 @@ import {
   DashboardGridHeight,
   DashboardGridItemHeight,
   DashboardGridSubItemHeight,
-  LoaderBoxStyles,
   marginTop4,
 } from "../styles";
 
@@ -39,7 +39,6 @@ import {
   getTotalRewards,
   sortByDate,
 } from "../utils/rewardUtils";
-import { Loader } from "../components/common/Loader";
 
 const GridRewardsTable = lazy(
   () => import("../components/ui/GridRewardsTable"),
